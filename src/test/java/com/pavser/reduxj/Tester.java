@@ -1,4 +1,4 @@
-package com.pavser.javaredux;
+package com.pavser.reduxj;
 
 import org.junit.Assert;
 import org.junit.Before;

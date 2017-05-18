@@ -1,4 +1,4 @@
-package com.pavser.javaredux;
+package com.pavser.reduxj;
 
 import com.rits.cloning.Cloner;
 

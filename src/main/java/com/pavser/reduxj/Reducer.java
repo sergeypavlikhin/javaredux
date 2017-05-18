@@ -1,4 +1,4 @@
-package com.pavser.javaredux;
+package com.pavser.reduxj;
 
 /**
  * Created by Sergey on 18.05.2017.

@@ -31,8 +31,8 @@ public class Store<StateType, DispatchableInterface extends DispatchableObject> 
         noticeSubscribers();
     }
 
-    public State getState(){
-        return state;
+    public StateType getState(){
+        return state.value;
     }
 
     private void noticeSubscribers(){

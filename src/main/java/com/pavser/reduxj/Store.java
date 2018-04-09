@@ -14,16 +14,39 @@ import java.util.List;
  */
 public class Store<StateType, ActionType extends Serializable> {
 
+    private static volatile Store instance;
+
+    public static <StateType, ActionType extends Serializable> Store<StateType, ActionType> getInstance() {
+        Store localInstance = instance;
+        if (localInstance == null) {
+            synchronized (Store.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new Store();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    public static <StateType, ActionType extends Serializable> void initialize(StateType stateType){
+        Store.<StateType, ActionType>getInstance().setState(stateType);
+    }
+
+
     private List<Subscriber> subscribers;
     private MainReducer<StateType, ActionType> reducer;
     private State<StateType> state;
 
-    public Store(State state) {
-        this.state = state;
+    private <StateType, ActionType> Store() {
         this.subscribers = new ArrayList<>();
     }
 
-    public void dispatch(Action action){
+    private void setState(StateType state){
+        this.state = new State<>(state);
+    }
+
+    public void dispatch(Action<ActionType> action){
         state = reducer.reduce(state, action);
         noticeSubscribers();
     }

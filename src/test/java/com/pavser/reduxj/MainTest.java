@@ -1,6 +1,6 @@
 package com.pavser.reduxj;
 
-import com.pavser.reduxj.helpers.ActionCreator;
+import com.pavser.reduxj.helpers.ActionHelper;
 import com.pavser.reduxj.skeletone.State;
 import org.junit.Test;
 
@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.pavser.reduxj.MainTest.ActionType.ADD_MESSAGE;
+import static com.pavser.reduxj.MainTest.ActionType.DELETE_MESSAGE;
 
 public class MainTest {
 
@@ -21,13 +24,12 @@ public class MainTest {
 
     @Test
     public void testTest(){
-        State<List<String>> state = new State<>(new ArrayList<>());
-        Store<List<String>, ActionType> store = new Store<>(state);
+        Store.<List<String>, ActionType>initialize(new ArrayList<>());
 
         System.out.println("Init state of store:");
-        System.out.println(store.getState());
+        System.out.println(Store.getInstance().getState());
 
-        store.addReducer((currentState, action) -> {
+        Store.<List<String>, ActionType>getInstance().addReducer((currentState, action) -> {
             switch (action.getType()){
                 case ADD_MESSAGE: {
                     Map<String, String> payload = action.getPayload();
@@ -51,11 +53,10 @@ public class MainTest {
             return null;
         });
 
-        store.dispatch(ActionCreator.create(ActionType.ADD_MESSAGE, new HashMap<String, String>(){{put(NEW_MESSAGE_KEY, "Привет, Я Программист");}}));
-
+        Store.<List<String>, ActionType>getInstance().dispatch(ActionCreator.addMessage("Привет, Я Программист"));
 
         System.out.println("State after dispatch:");
-        System.out.println(store.getState());
+        System.out.println(Store.getInstance().getState());
 
 
     }

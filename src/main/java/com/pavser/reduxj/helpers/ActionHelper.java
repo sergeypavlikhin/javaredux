@@ -5,7 +5,7 @@ import com.pavser.reduxj.skeletone.Action;
 import java.io.Serializable;
 import java.util.Map;
 
-public class ActionCreator {
+public class ActionHelper {
 
     /**
      * Just create instance of Action.

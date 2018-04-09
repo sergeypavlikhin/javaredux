@@ -1,22 +1,24 @@
 package com.pavser.reduxj;
 
+import com.pavser.reduxj.skeletone.Action;
+import com.pavser.reduxj.skeletone.MainReducer;
+import com.pavser.reduxj.skeletone.Reducer;
+import com.pavser.reduxj.skeletone.State;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Sergey on 18.05.2017.
  */
-public class Store<StateType> {
-
-    public static <StateType> Store createStore(Reducer reducer, StateType defaultValue){
-        return new Store(reducer, new State<StateType>(defaultValue));
-    }
+public class Store<StateType, ActionType extends Serializable> {
 
     private List<Subscriber> subscribers;
-    private MainReducer<StateType> reducer;
+    private MainReducer<StateType, ActionType> reducer;
     private State<StateType> state;
 
-    private Store(State state) {
+    public Store(State state) {
         this.state = state;
         this.subscribers = new ArrayList<>();
     }
@@ -26,11 +28,12 @@ public class Store<StateType> {
         noticeSubscribers();
     }
 
-    public Store addReducer(Reducer<StateType> reducer){
+    public Store addReducer(Reducer<StateType, ActionType> reducer){
         getMainReducer().addReducer(reducer);
+        return this;
     }
 
-    private MainReducer<StateType> getMainReducer(){
+    private MainReducer<StateType,ActionType> getMainReducer(){
         if (reducer == null){
             reducer = new MainReducer<>();
         }

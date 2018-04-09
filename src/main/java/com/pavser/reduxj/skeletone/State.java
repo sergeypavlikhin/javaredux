@@ -1,4 +1,4 @@
-package com.pavser.reduxj;
+package com.pavser.reduxj.skeletone;
 
 import com.rits.cloning.Cloner;
 
